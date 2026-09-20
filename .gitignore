@@ -10,3 +10,7 @@ node_modules/
 extract.js
 extract2.js
 download-assets.js
+
+# Stray files from another session (site uses styles.css / app.js)
+style.css
+script.js
