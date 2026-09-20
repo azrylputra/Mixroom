@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mixroom — Programs</title>
+<meta name="description" content="Mixroom Programs — find the class that fits your sound. Browse guitar, keyboard, drum, vocal, bass and band classes." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="stage"><div id="scaler">
+<div class="page">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <p class="t">GET 70% OFF FOR THE FIRST 3 MONTHS</p>
+    <div class="join">
+      <a href="#">JOIN NOW</a>
+      <img class="ic16" src="assets/arrow-right.svg" alt="" />
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="nav-in">
+      <a href="index.html"><img class="nav-logo" src="assets/logo.svg" alt="Mixroom" /></a>
+      <nav class="nav-links">
+        <a href="program.html" style="color:#8a6a12">Programs</a><a href="#">Instructors</a><a href="index.html">About Us</a><a href="blogs.html">Blogs</a>
+      </nav>
+      <div class="nav-cta">
+        <div class="pill yellow">Register</div>
+        <div class="pill ghost">Login</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRAM HEADER -->
+  <div class="prog-head reveal">
+    <div class="prog-head-in">
+      <div class="l">
+        <div class="kicker">EXPLORE OUR CLASSES</div>
+        <div class="sec-title">Find the Class That Fits Your Sound</div>
+      </div>
+      <a class="btn ghost" href="#" style="border-width:1.49px">Contact Us</a>
+    </div>
+  </div>
+
+  <!-- MAIN: filters + grid -->
+  <div class="prog-main">
+    <aside class="filters">
+      <div class="fhead"><span class="ft">Filters</span><span class="clr" id="clear-all">Clear all</span></div>
+      <div class="fdiv"></div>
+      <div class="fgroup" id="f-categories"><div class="gt">Categories</div></div>
+      <div class="fdiv"></div>
+      <div class="fgroup" id="f-levels"><div class="gt">Level</div></div>
+      <div class="fdiv"></div>
+      <div class="fgroup" id="f-prices"><div class="gt">Price</div></div>
+    </aside>
+
+    <div class="prog-grid" id="prog-grid">
+      <div class="prog-empty" id="prog-empty" hidden>No classes match your filters. Try clearing some.</div>
+    </div>
+  </div>
+
+  <!-- SHOWCASE -->
+  <div class="show reveal">
+    <div class="show-head">
+      <div class="l">
+        <div class="kicker">SHOWCASE</div>
+        <div class="sec-title">Watch Them Find Their Sound</div>
+      </div>
+      <div class="r">
+        <div class="yearcirc"><img src="assets/showcase-circle.png" alt=""/><div class="yr">&lsquo;26</div></div>
+        <div class="social-col">
+          <div class="social-h"><span class="t">Our Social Media</span><img class="a" src="assets/arrow-down-right2.svg" alt=""/></div>
+          <div class="social-ic">
+            <div class="sic"><img src="assets/ic-instagram.svg" alt=""/></div>
+            <div class="sic"><img src="assets/ic-tiktok.svg" alt=""/></div>
+            <div class="sic fb"><img src="assets/ic-facebook.svg" alt=""/></div>
+            <div class="sic yt"><img src="assets/ic-youtube.svg" alt=""/></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gallery">
+      <div class="vmarq"><div class="rot"><div class="marquee"><div class="mtrack" data-marquee></div></div></div></div>
+      <div class="gal-right">
+        <div class="gal-in">
+          <div class="gal-clip">
+            <div class="gal-imgs" id="gal-imgs"></div>
+          </div>
+          <div class="gal-ctrls">
+            <div class="left">
+              <div class="arrbtn" id="gal-prev" aria-label="Previous"><img src="assets/arrow-right1.svg" alt=""/></div>
+              <div class="arrbtn" id="gal-next" aria-label="Next"><img src="assets/arrow-right2.svg" alt=""/></div>
+            </div>
+            <div class="gal-aster"><div class="rot"><img src="assets/asterisk3.svg" alt=""/></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="bg"><img src="assets/hero-band.png" alt=""/><div class="grad"></div></div>
+    <div class="bigword">MIXROOM</div>
+    <div class="marquee-wrap"><div class="rot"><div class="marquee"><div class="mtrack" data-marquee></div></div></div></div>
+    <div class="cta-content">
+      <div class="cta-row">
+        <div class="eyebrow anim-c d1">MUSIC SCHOOL</div>
+        <div class="r">
+          <div class="h anim-c d2"><h2>Ready to turn your passion for music into something you can truly play</h2></div>
+          <a class="btn yellow anim-c d3" href="#">Get Started <img class="ic16" src="assets/arrow-right.svg" alt=""/></a>
+        </div>
+      </div>
+      <p class="cta-note anim-c d4">Whether you're picking up an instrument for the first time or ready to take the stage, there's a place for you at MIXROOM.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="impact">
+      <div class="impact-l">
+        <div class="impact-card"><img src="assets/impact-card.png" alt=""/><div class="ov"></div></div>
+        <div class="impact-title" id="impact-title">Learn music in a way that feels truly yours. <span class="muted">With room to explore, create, and perform.</span></div>
+      </div>
+      <div class="menus">
+        <div class="mcol">
+          <div class="h">Menu</div>
+          <a href="program.html">Class</a><a href="#">Instructors</a><a href="index.html">About Us</a><a href="blogs.html">Blogs</a>
+        </div>
+        <div class="mcol">
+          <div class="h">Social Media</div>
+          <a href="#">Instagram</a><a href="#">X</a><a href="#">Youtube</a><a href="#">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot-logo"><img src="assets/logo-mark-big.svg" alt="" style="width:100%;height:100%"/></div>
+
+    <div class="foot-content">
+      <div class="foot-row">
+        <div><p>San Fransisco, USA</p><p>Bandung, Indonesia</p></div>
+        <div class="info">
+          <p>Hello@mixroom.com</p>
+          <p>©Copyright 2026, All Rights Reserved</p>
+        </div>
+      </div>
+      <div class="foot-div">
+        <div class="line"></div>
+        <div class="foot-links"><p>Privacy Policy</p><p>Terms &amp; conditions</p></div>
+      </div>
+    </div>
+
+    <div class="foot-big">
+      <div class="word">MIXROOM</div>
+      <div class="marquee-wrap"><div class="rot"><div class="marquee"><div class="mtrack" data-marquee></div></div></div></div>
+    </div>
+  </div>
+
+</div>
+</div></div>
+
+<script src="app.js"></script>
+<script>
+  (function(){
+    var grid=document.getElementById('prog-grid');
+    var emptyMsg=document.getElementById('prog-empty');
+    if(!grid) return;
+
+    // class data: category + level + numeric price drive the filters
+    var CLASSES=[
+      {cat:"Guitar",lvl:"Beginner",nm:"Guitar Essentials",price:180,off:"-55%"},
+      {cat:"Keyboard & Piano",lvl:"Beginner",nm:"Keyboard Foundations",price:220,off:"-40%"},
+      {cat:"Drum",lvl:"Intermediate",nm:"Drum Performance",price:260,off:"-35%"},
+      {cat:"Vocal",lvl:"Beginner",nm:"Vocal Warm-Ups",price:150,off:"-60%"},
+      {cat:"Bass",lvl:"Intermediate",nm:"Bass Groove Lab",price:240,off:"-30%"},
+      {cat:"Band",lvl:"Advanced",nm:"Full Band Session",price:390,off:"-25%"},
+      {cat:"Guitar",lvl:"Beginner",nm:"Acoustic Guitar Basics",price:170,off:"-50%"},
+      {cat:"Keyboard & Piano",lvl:"Intermediate",nm:"Piano Improvisation",price:300,off:"-35%"},
+      {cat:"Drum",lvl:"Advanced",nm:"Jazz Drumming",price:420,off:"-20%"},
+      {cat:"Vocal",lvl:"Beginner",nm:"Singing for Beginners",price:160,off:"-55%"},
+      {cat:"Guitar",lvl:"Intermediate",nm:"Electric Guitar Riffs",price:260,off:"-40%"},
+      {cat:"Keyboard & Piano",lvl:"Beginner",nm:"Piano Chord Basics",price:140,off:"-60%"},
+      {cat:"Band",lvl:"Advanced",nm:"Songwriting Studio",price:450,off:"-20%"},
+      {cat:"Keyboard & Piano",lvl:"Intermediate",nm:"Keyboard & Synths",price:280,off:"-35%"},
+      {cat:"Drum",lvl:"Beginner",nm:"Rhythm & Timing",price:155,off:"-55%"},
+      {cat:"Vocal",lvl:"Intermediate",nm:"Vocal Harmony",price:250,off:"-40%"},
+      {cat:"Band",lvl:"Advanced",nm:"Studio Recording",price:480,off:"-15%"},
+      {cat:"Bass",lvl:"Beginner",nm:"Bass Fundamentals",price:175,off:"-50%"},
+      {cat:"Band",lvl:"Intermediate",nm:"Live Performance",price:320,off:"-30%"},
+      {cat:"Drum",lvl:"Beginner",nm:"Drum Kit Starter",price:165,off:"-55%"},
+      {cat:"Band",lvl:"Advanced",nm:"Band Leadership",price:400,off:"-25%"}
+    ];
+
+    var PRICES=[
+      {label:"Under $200", test:function(p){return p<200;}},
+      {label:"$200 – $400", test:function(p){return p>=200&&p<=400;}},
+      {label:"$400 – $700", test:function(p){return p>400&&p<=700;}},
+      {label:"Over $700", test:function(p){return p>700;}}
+    ];
+    var LEVELS=["Beginner","Intermediate","Advanced"];
+
+    function priceBucket(p){ for(var i=0;i<PRICES.length;i++){ if(PRICES[i].test(p)) return PRICES[i].label; } return ""; }
+
+    // ---- build cards ----
+    var cardEls=[];
+    CLASSES.forEach(function(c,i){
+      var el=document.createElement('div');
+      el.className='card creveal';
+      el.setAttribute('data-cat', c.cat);
+      el.setAttribute('data-lvl', c.lvl);
+      el.setAttribute('data-price', priceBucket(c.price));
+      el.innerHTML='<div class="img"><img src="assets/prog'+((i%12)+1)+'.jpg" alt=""></div>'
+        +'<div class="meta"><div class="lvl">'+c.lvl.toUpperCase()+'</div><div class="nm">'+c.nm+'</div></div>'
+        +'<div class="join-btn"><span class="jt">Join — <b>$'+c.price+'</b></span><span class="badge">'+c.off+'</span></div>';
+      grid.appendChild(el); cardEls.push(el);
+    });
+
+    // ---- build filter rows ----
+    function countBy(fn){ var m={}; CLASSES.forEach(function(c){ var k=fn(c); m[k]=(m[k]||0)+1; }); return m; }
+    var catCounts=countBy(function(c){return c.cat;});
+    var lvlCounts=countBy(function(c){return c.lvl;});
+    var priceCounts=countBy(function(c){return priceBucket(c.price);});
+    var CATS=["Guitar","Keyboard & Piano","Drum","Vocal","Bass","Band"];
+
+    function row(type,value,label,count){
+      var r=document.createElement('div');
+      r.className='frow'; r.setAttribute('data-type',type); r.setAttribute('data-value',value);
+      r.innerHTML='<span class="box"><img src="assets/check.svg" alt=""></span><span class="lbl">'+label+'</span>'
+        +(count!=null?'<span class="cnt">'+count+'</span>':'');
+      return r;
+    }
+    var gCat=document.getElementById('f-categories'), gLvl=document.getElementById('f-levels'), gPrice=document.getElementById('f-prices');
+    CATS.forEach(function(c){ if(catCounts[c]) gCat.appendChild(row('cat',c,c,catCounts[c])); });
+    LEVELS.forEach(function(l){ gLvl.appendChild(row('lvl',l,l,lvlCounts[l]||0)); });
+    PRICES.forEach(function(p){ gPrice.appendChild(row('price',p.label,p.label,priceCounts[p.label]||0)); });
+
+    // ---- filtering ----
+    function selected(type){
+      return Array.prototype.map.call(document.querySelectorAll('.frow.on[data-type="'+type+'"]'), function(r){ return r.getAttribute('data-value'); });
+    }
+    function applyFilters(reveal){
+      var cats=selected('cat'), lvls=selected('lvl'), prices=selected('price'), shown=0;
+      cardEls.forEach(function(el){
+        var ok=(!cats.length || cats.indexOf(el.getAttribute('data-cat'))>-1)
+             && (!lvls.length || lvls.indexOf(el.getAttribute('data-lvl'))>-1)
+             && (!prices.length || prices.indexOf(el.getAttribute('data-price'))>-1);
+        el.style.display = ok ? '' : 'none';
+        if(ok){ shown++; if(reveal) el.classList.add('in'); }   // after a filter action, show instantly
+      });
+      if(emptyMsg) emptyMsg.hidden = shown>0;
+    }
+    document.querySelectorAll('.filters .frow').forEach(function(r){
+      r.addEventListener('click', function(){ r.classList.toggle('on'); applyFilters(true); });
+    });
+    var clr=document.getElementById('clear-all');
+    if(clr) clr.addEventListener('click', function(){ document.querySelectorAll('.filters .frow.on').forEach(function(r){ r.classList.remove('on'); }); applyFilters(true); });
+
+    // ---- reveal cards as they scroll into view (left -> right per row) ----
+    if(typeof onEnter==='function'){
+      cardEls.forEach(function(card,i){ onEnter(card, 0.94, function(){ setTimeout(function(){ card.classList.add('in'); }, (i%3)*110); }); });
+    } else { cardEls.forEach(function(c){ c.classList.add('in'); }); }
+
+    applyFilters(); // default: nothing checked -> all classes shown
+  })();
+</script>
+</body>
+</html>

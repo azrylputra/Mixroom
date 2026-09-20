@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mixroom — Blogs</title>
+<meta name="description" content="The Mixroom Journal — stories, ideas, and inspiration for every musician." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="stage"><div id="scaler">
+<div class="page">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <p class="t">GET 70% OFF FOR THE FIRST 3 MONTHS</p>
+    <div class="join"><a href="#">JOIN NOW</a><img class="ic16" src="assets/arrow-right.svg" alt="" /></div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="nav-in">
+      <a href="index.html"><img class="nav-logo" src="assets/logo.svg" alt="Mixroom" /></a>
+      <nav class="nav-links">
+        <a href="program.html">Programs</a><a href="#">Instructors</a><a href="index.html">About Us</a><a href="blogs.html" style="color:#8a6a12">Blogs</a>
+      </nav>
+      <div class="nav-cta">
+        <div class="pill yellow">Register</div>
+        <div class="pill ghost">Login</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="blogp-head reveal">
+    <div class="l">
+      <div class="kicker">THE JOURNAL</div>
+      <div class="sec-title">Stories, ideas, and inspiration for every musician</div>
+    </div>
+    <div class="blogp-search">
+      <div class="searchbox">
+        <img src="assets/search.svg" alt="" />
+        <input type="text" id="blog-search" placeholder="Search anything here..." aria-label="Search blogs" />
+      </div>
+      <div class="blog-tabs" id="blog-tabs"></div>
+    </div>
+  </div>
+
+  <!-- BLOG LIST -->
+  <div class="blog-sec">
+    <div class="blog-list" id="blog-list"></div>
+    <div class="blog-empty" id="blog-empty" hidden>No articles match your search.</div>
+  </div>
+
+  <!-- SHOWCASE -->
+  <div class="show reveal">
+    <div class="show-head">
+      <div class="l">
+        <div class="kicker">SHOWCASE</div>
+        <div class="sec-title">Watch Them Find Their Sound</div>
+      </div>
+      <div class="r">
+        <div class="yearcirc"><img src="assets/showcase-circle.png" alt=""/><div class="yr">&lsquo;26</div></div>
+        <div class="social-col">
+          <div class="social-h"><span class="t">Our Social Media</span><img class="a" src="assets/arrow-down-right2.svg" alt=""/></div>
+          <div class="social-ic">
+            <div class="sic"><img src="assets/ic-instagram.svg" alt=""/></div>
+            <div class="sic"><img src="assets/ic-tiktok.svg" alt=""/></div>
+            <div class="sic fb"><img src="assets/ic-facebook.svg" alt=""/></div>
+            <div class="sic yt"><img src="assets/ic-youtube.svg" alt=""/></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gallery">
+      <div class="vmarq"><div class="rot"><div class="marquee"><div class="mtrack" data-marquee></div></div></div></div>
+      <div class="gal-right">
+        <div class="gal-in">
+          <div class="gal-clip"><div class="gal-imgs" id="gal-imgs"></div></div>
+          <div class="gal-ctrls">
+            <div class="left">
+              <div class="arrbtn" id="gal-prev" aria-label="Previous"><img src="assets/arrow-right1.svg" alt=""/></div>
+              <div class="arrbtn" id="gal-next" aria-label="Next"><img src="assets/arrow-right2.svg" alt=""/></div>
+            </div>
+            <div class="gal-aster"><div class="rot"><img src="assets/asterisk3.svg" alt=""/></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="bg"><img src="assets/hero-band.png" alt=""/><div class="grad"></div></div>
+    <div class="bigword">MIXROOM</div>
+    <div class="marquee-wrap"><div class="rot"><div class="marquee"><div class="mtrack" data-marquee></div></div></div></div>
+    <div class="cta-content">
+      <div class="cta-row">
+        <div class="eyebrow anim-c d1">MUSIC SCHOOL</div>
+        <div class="r">
+          <div class="h anim-c d2"><h2>Ready to turn your passion for music into something you can truly play</h2></div>
+          <a class="btn yellow anim-c d3" href="#">Get Started <img class="ic16" src="assets/arrow-right.svg" alt=""/></a>
+        </div>
+      </div>
+      <p class="cta-note anim-c d4">Whether you're picking up an instrument for the first time or ready to take the stage, there's a place for you at MIXROOM.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="impact">
+      <div class="impact-l">
+        <div class="impact-card"><img src="assets/impact-card.png" alt=""/><div class="ov"></div></div>
+        <div class="impact-title" id="impact-title">Learn music in a way that feels truly yours. <span class="muted">With room to explore, create, and perform.</span></div>
+      </div>
+      <div class="menus">
+        <div class="mcol"><div class="h">Menu</div><a href="program.html">Class</a><a href="#">Instructors</a><a href="index.html">About Us</a><a href="blogs.html">Blogs</a></div>
+        <div class="mcol"><div class="h">Social Media</div><a href="#">Instagram</a><a href="#">X</a><a href="#">Youtube</a><a href="#">Facebook</a></div>
+      </div>
+    </div>
+    <div class="foot-logo"><img src="assets/logo-mark-big.svg" alt="" style="width:100%;height:100%"/></div>
+    <div class="foot-content">
+      <div class="foot-row">
+        <div><p>San Fransisco, USA</p><p>Bandung, Indonesia</p></div>
+        <div class="info"><p>Hello@mixroom.com</p><p>©Copyright 2026, All Rights Reserved</p></div>
+      </div>
+      <div class="foot-div"><div class="line"></div><div class="foot-links"><p>Privacy Policy</p><p>Terms &amp; conditions</p></div></div>
+    </div>
+    <div class="foot-big"><div class="word">MIXROOM</div><div class="marquee-wrap"><div class="rot"><div class="marquee"><div class="mtrack" data-marquee></div></div></div></div></div>
+  </div>
+
+</div>
+</div></div>
+
+<script src="app.js"></script>
+<script>
+  (function(){
+    var listEl=document.getElementById('blog-list');
+    var tabsEl=document.getElementById('blog-tabs');
+    var searchEl=document.getElementById('blog-search');
+    var emptyEl=document.getElementById('blog-empty');
+    if(!listEl) return;
+
+    var CATS=["All","Music Tips","Instruments","Performance","Songwriting","Band Life","Student Stories"];
+    var POSTS=[
+      {date:"SEP 16, 2026", author:"Lukman Hakim", cat:"Music Tips", title:"How to Practice an Instrument Without Getting Bored", img:"assets/prog1.jpg"},
+      {date:"SEP 12, 2026", author:"Rina Putri", cat:"Instruments", title:"Choosing Your First Guitar: A Simple Guide", img:"assets/prog2.jpg"},
+      {date:"SEP 08, 2026", author:"Dave Kusuma", cat:"Performance", title:"Beating Stage Fright Before Your First Show", img:"assets/prog3.jpg"},
+      {date:"AUG 30, 2026", author:"Mixroom Crew", cat:"Songwriting", title:"Turning a Melody Into a Finished Song", img:"assets/prog4.jpg"},
+      {date:"AUG 22, 2026", author:"Sarah Lee", cat:"Band Life", title:"What I Learned Joining My First Band", img:"assets/prog5.jpg"},
+      {date:"AUG 15, 2026", author:"Andi Pratama", cat:"Student Stories", title:"From Zero to Stage: A Student's Journey", img:"assets/prog6.jpg"},
+      {date:"AUG 10, 2026", author:"Lukman Hakim", cat:"Music Tips", title:"Five Warm-Ups Every Musician Should Know", img:"assets/prog7.jpg"},
+      {date:"AUG 02, 2026", author:"Rina Putri", cat:"Instruments", title:"Caring for Your Keyboard & Piano", img:"assets/prog8.jpg"}
+    ];
+
+    // build tabs
+    var activeTab="All";
+    CATS.forEach(function(c){
+      var b=document.createElement('div'); b.className='btab'+(c==="All"?' on':''); b.textContent=c; b.setAttribute('data-cat',c);
+      b.addEventListener('click', function(){ activeTab=c; tabsEl.querySelectorAll('.btab').forEach(function(x){ x.classList.toggle('on', x===b); }); render(); });
+      tabsEl.appendChild(b);
+    });
+
+    function cardHTML(p){
+      return '<a class="bcard" href="blog-detail.html">'
+        +'<div class="content">'
+          +'<div class="date"><span class="dt">'+p.date+'</span><img class="sc" src="assets/blog-scribble.svg" alt=""></div>'
+          +'<div class="foot"><div class="badge">'+p.author.toUpperCase()+'</div><div class="ttl">'+p.title+'</div></div>'
+        +'</div>'
+        +'<div class="thumb"><img src="'+p.img+'" alt=""></div>'
+      +'</a>';
+    }
+    function render(){
+      var q=(searchEl.value||'').trim().toLowerCase();
+      var shown=0, html='';
+      POSTS.forEach(function(p){
+        var okTab = activeTab==="All" || p.cat===activeTab;
+        var okSearch = !q || (p.title+' '+p.author+' '+p.cat).toLowerCase().indexOf(q)>-1;
+        if(okTab && okSearch){ html+=cardHTML(p); shown++; }
+      });
+      listEl.innerHTML=html;
+      if(emptyEl) emptyEl.hidden = shown>0;
+    }
+    searchEl.addEventListener('input', render);
+    render();
+  })();
+</script>
+</body>
+</html>

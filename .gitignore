@@ -1,0 +1,12 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.log
+
+# Node (none used, but just in case)
+node_modules/
+
+# Local dev helper scripts (not needed to run the site)
+extract.js
+extract2.js
+download-assets.js
