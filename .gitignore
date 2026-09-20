@@ -14,3 +14,6 @@ download-assets.js
 # Stray files from another session (site uses styles.css / app.js)
 style.css
 script.js
+
+# Local-only dev server (not deployed)
+server.js
