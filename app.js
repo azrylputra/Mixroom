@@ -72,10 +72,10 @@
   // ---- Responsive scale via zoom (native scroll + sticky works) ----
   var scaler = document.getElementById('scaler');
   function fit(){
+    // scale the 1440 design to exactly fill the viewport width (up OR down) so it never
+    // leaves an empty/cut strip on wide screens and never overflows on small ones
     var w = document.documentElement.clientWidth;
-    var scale = w / 1440;
-    if(scale > 1) scale = 1;
-    scaler.style.zoom = scale;
+    scaler.style.zoom = w / 1440;
   }
   window.addEventListener('resize', fit);
   fit();
