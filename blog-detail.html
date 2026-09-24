@@ -37,11 +37,11 @@
   <!-- ARTICLE -->
   <article class="article reveal">
     <div class="article-head">
-      <div class="article-meta">19 SEP 2026 | LUKMAN HAKIM</div>
-      <h1 class="article-title">Stories, ideas, and inspiration for every musician</h1>
+      <div class="article-meta" id="a-meta">19 SEP 2026 | LUKMAN HAKIM</div>
+      <h1 class="article-title" id="a-title">Stories, ideas, and inspiration for every musician</h1>
     </div>
-    <div class="article-hero"><img src="assets/hero-band.png" alt="" /></div>
-    <div class="article-body">
+    <div class="article-hero"><img id="a-hero" src="assets/hero-band.png" alt="" /></div>
+    <div class="article-body" id="a-body">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum.</p>
       <p>Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam eget mi in purus lobortis eleifend. Sed nec ante dictum sem condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis nisi, ac posuere leo.</p>
       <p>Nam pulvinar blandit velit, id condimentum diam faucibus at. Aliquam lacus nisi, sollicitudin at nisi nec, fermentum congue felis. Quisque mauris dolor, fringilla sed tincidunt ac, finibus non odio. Sed vitae mauris nec ante pretium finibus. Donec nisl neque, pharetra ac elit eu, faucibus aliquam ligula. Nullam dictum, tellus tincidunt tempor laoreet, nibh elit sollicitudin felis, eget feugiat sapien diam nec nisl. Aenean gravida turpis nisi, consequat dictum risus dapibus a. Duis felis ante, varius in neque eu, tempor suscipit sem.</p>
@@ -92,6 +92,32 @@
 </div>
 </div></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="store.js"></script>
 <script src="app.js"></script>
+<script>
+  // if opened from a CMS post (?id=...), render that post from Supabase
+  (async function(){
+    try{
+      var id=new URLSearchParams(location.search).get('id');
+      if(!id || !window.MixDB || !MixDB.ready) return;
+      var p=await MixDB.blog(id);
+      if(!p) return;
+      document.title='Mixroom — '+p.title;
+      var meta=document.getElementById('a-meta'); if(meta) meta.textContent=MixDB.fmtDate(p.created_at)+' | '+(p.author||'').toUpperCase();
+      var title=document.getElementById('a-title'); if(title) title.textContent=p.title||'';
+      var hero=document.getElementById('a-hero'); if(hero && p.image) hero.src=p.image;
+      var body=document.getElementById('a-body');
+      if(body){
+        var paras=(p.description||'').split(/\n\s*\n/).filter(function(s){return s.trim();});
+        if(paras.length){
+          body.innerHTML=paras.map(function(t){
+            return '<p>'+t.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}).replace(/\n/g,'<br>')+'</p>';
+          }).join('');
+        }
+      }
+    }catch(e){}
+  })();
+</script>
 </body>
 </html>

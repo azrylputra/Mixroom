@@ -165,9 +165,11 @@
 </div>
 </div></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="store.js"></script>
 <script src="app.js"></script>
 <script>
-  (function(){
+  (async function(){
     var grid=document.getElementById('prog-grid');
     var emptyMsg=document.getElementById('prog-empty');
     if(!grid) return;
@@ -197,6 +199,18 @@
       {cat:"Band",lvl:"Advanced",nm:"Band Leadership",price:400,off:"-25%"}
     ];
 
+    // merge classes added from the admin CMS (Supabase) — newest first
+    try{
+      if(window.MixDB && MixDB.ready){
+        var rows=await MixDB.programs();
+        if(rows.length){
+          CLASSES = rows.map(function(s){
+            return {cat:s.category, lvl:s.level, nm:s.title, price:Number(s.price)||0, off:MixDB.fmtDiscount(s.discount_value), img:s.image||''};
+          }).concat(CLASSES);
+        }
+      }
+    }catch(e){}
+
     var PRICES=[
       {label:"Under $200", test:function(p){return p<200;}},
       {label:"$200 – $400", test:function(p){return p>=200&&p<=400;}},
@@ -215,7 +229,8 @@
       el.setAttribute('data-cat', c.cat);
       el.setAttribute('data-lvl', c.lvl);
       el.setAttribute('data-price', priceBucket(c.price));
-      el.innerHTML='<div class="img"><img src="assets/prog'+((i%12)+1)+'.jpg" alt=""></div>'
+      var _img = c.img || 'assets/prog'+((i%12)+1)+'.jpg';
+      el.innerHTML='<div class="img"><img src="'+_img+'" alt=""></div>'
         +'<div class="meta"><div class="lvl">'+c.lvl.toUpperCase()+'</div><div class="nm">'+c.nm+'</div></div>'
         +'<div class="join-btn"><span class="jt">Join — <b>$'+c.price+'</b></span><span class="badge">'+c.off+'</span></div>';
       grid.appendChild(el); cardEls.push(el);

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mixroom — Admin</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --yellow:#ffc857; --navy:#151a23; --ink:#1a1d24; --muted:#8b909a; --muted2:#a8adb6;
+    --bg:#f4f5f7; --card:#ffffff; --line:#eceef1; --line2:#e3e5e9;
+    --f:'Onest',-apple-system,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);font-family:var(--f);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  input,select,textarea,button{font-family:var(--f);color:var(--ink);}
+  ::placeholder{color:#b6bbc4;}
+  .navy{background:var(--navy);color:#fff;}
+
+  /* ============ LOGIN ============ */
+  .login{min-height:100vh;display:flex;flex-direction:column;background:
+     radial-gradient(circle, #dfe2e7 1px, transparent 1.4px) 0 0/22px 22px, var(--bg);}
+  .login .brandbar{display:flex;align-items:center;gap:10px;padding:26px 34px;}
+  .login .brandbar .mk{width:30px;height:30px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;}
+  .login .brandbar .mk span{width:11px;height:11px;border-radius:50%;background:var(--yellow);}
+  .login .brandbar b{font-size:19px;letter-spacing:-.4px;}
+  .login .center{flex:1;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .lcard{width:100%;max-width:440px;background:var(--card);border:1px solid var(--line2);border-radius:20px;padding:40px 40px 34px;box-shadow:0 20px 50px -30px rgba(20,25,35,.25);}
+  .lcard .avatar{width:52px;height:52px;border-radius:50%;background:#f0f1f4;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+  .lcard h1{font-size:24px;font-weight:600;letter-spacing:-.5px;text-align:center;}
+  .lcard .sub{color:var(--muted);font-size:14px;text-align:center;margin-top:6px;margin-bottom:26px;}
+  .lbl{font-size:13px;color:#565c66;margin-bottom:7px;display:block;}
+  .fld{margin-bottom:16px;}
+  .inp{width:100%;background:#fbfbfc;border:1px solid var(--line2);border-radius:11px;padding:13px 14px;font-size:15px;outline:none;transition:border-color .15s;}
+  .inp:focus{border-color:var(--navy);}
+  .pwrap{position:relative;}
+  .pwrap .eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--muted);background:none;border:none;padding:4px;}
+  .keep{display:flex;align-items:center;gap:9px;font-size:13.5px;color:#565c66;margin:4px 0 22px;cursor:pointer;user-select:none;}
+  .keep input{width:16px;height:16px;accent-color:var(--navy);}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;border:none;border-radius:11px;font-weight:600;font-size:15px;padding:13px 22px;transition:filter .15s,background .15s,border-color .15s,transform .04s;}
+  .btn:active{transform:translateY(1px);}
+  .btn.b-navy{background:var(--navy);color:#fff;width:100%;}
+  .btn.b-navy:hover{filter:brightness(1.25);}
+  .btn.b-ghost{background:#fff;color:var(--ink);border:1px solid var(--line2);}
+  .btn.b-ghost:hover{border-color:#cfd3da;}
+  .signup{text-align:center;color:var(--muted);font-size:14px;margin-top:20px;}
+  .signup b{color:var(--ink);cursor:pointer;}
+  .err{color:#e0463e;font-size:13px;margin-top:10px;text-align:center;min-height:16px;}
+  .lhint{text-align:center;color:var(--muted2);font-size:12px;margin-top:16px;}
+
+  /* ============ APP SHELL ============ */
+  .app{display:none;}
+  .app.on{display:grid;grid-template-columns:264px 1fr;min-height:100vh;}
+  .side{background:#fff;border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;}
+  .side .logo{display:flex;align-items:center;gap:10px;padding:6px 8px 18px;}
+  .side .logo .mk{width:28px;height:28px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;}
+  .side .logo .mk span{width:10px;height:10px;border-radius:50%;background:var(--yellow);}
+  .side .logo b{font-size:17px;letter-spacing:-.3px;}
+  .search{display:flex;align-items:center;gap:9px;background:#f6f7f9;border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:20px;}
+  .search input{border:none;background:none;outline:none;font-size:14px;width:100%;}
+  .side .cap{font-size:11px;letter-spacing:.6px;color:var(--muted2);text-transform:uppercase;padding:0 8px 8px;}
+  .nitem{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#5f646d;font-size:14.5px;cursor:pointer;transition:background .14s,color .14s;margin-bottom:2px;}
+  .nitem svg{width:18px;height:18px;flex:none;}
+  .nitem:hover{background:#f6f7f9;color:var(--ink);}
+  .nitem.on{background:#f2f3f5;color:var(--ink);font-weight:600;}
+  .nitem.on svg{color:var(--navy);}
+  .side .spacer{flex:1;}
+  .side .sec2{border-top:1px solid var(--line);padding-top:12px;margin-top:8px;}
+  .uprofile{display:flex;align-items:center;gap:10px;padding:10px 8px 2px;margin-top:10px;border-top:1px solid var(--line);}
+  .uprofile .av{width:34px;height:34px;border-radius:50%;background:var(--yellow);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex:none;}
+  .uprofile .un{font-size:13.5px;font-weight:600;line-height:1.2;}
+  .uprofile .ue{font-size:11.5px;color:var(--muted);}
+
+  .main{padding:0;min-width:0;}
+  .maintop{display:flex;justify-content:flex-end;padding:18px 34px 0;}
+  .logout{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#5f646d;border:1px solid var(--line2);background:#fff;border-radius:9px;padding:8px 13px;cursor:pointer;}
+  .logout:hover{border-color:#cfd3da;}
+  .content{padding:14px 34px 44px;max-width:1160px;}
+  .pagehead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:8px 0 26px;}
+  .pagehead h2{font-size:26px;font-weight:600;letter-spacing:-.5px;}
+  .addbtn{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:none;border-radius:11px;padding:11px 18px;font-size:14px;font-weight:600;cursor:pointer;}
+  .addbtn:hover{filter:brightness(1.25);}
+
+  /* dashboard */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:26px;}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;}
+  .stat .n{font-size:32px;font-weight:700;letter-spacing:-1px;}
+  .stat .l{color:var(--muted);font-size:13px;margin-top:4px;}
+  .stat.acc{background:var(--yellow);border-color:var(--yellow);}
+  .stat.acc .l{color:#7a611b;}
+
+  /* card grids */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media(max-width:1080px){ .grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:720px){ .grid{grid-template-columns:1fr;} .app.on{grid-template-columns:1fr;} .side{position:static;height:auto;} }
+
+  .ccard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;position:relative;}
+  .ccard .top{display:flex;gap:12px;align-items:flex-start;}
+  .ccard .th{width:46px;height:46px;border-radius:10px;background:#eceef1 center/cover no-repeat;flex:none;}
+  .ccard .nm{font-size:15.5px;font-weight:600;line-height:1.25;padding-right:22px;}
+  .ccard .lv{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .ccard .dots{position:absolute;top:14px;right:12px;cursor:pointer;color:#b3b8c0;padding:2px 6px;border-radius:6px;font-size:16px;line-height:1;}
+  .ccard .dots:hover{background:#f2f3f5;color:var(--ink);}
+  .ccard .prow{display:flex;align-items:center;gap:8px;margin-top:16px;}
+  .ccard .price{font-size:14px;font-weight:600;}
+  .ccard .badge{background:var(--yellow);color:#4a3a08;font-size:10.5px;font-weight:700;letter-spacing:.3px;padding:3px 7px;border-radius:6px;}
+  .ccard .mentor{display:flex;align-items:center;gap:7px;font-size:12.5px;color:#5f646d;margin-top:12px;}
+  .ccard .hr{height:1px;background:var(--line);margin:12px 0;}
+  .ccard .max{font-size:12px;color:var(--muted);}
+
+  .bcardA{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative;}
+  .bcardA .img{height:150px;background:#eceef1 center/cover no-repeat;}
+  .bcardA .body{padding:14px 15px 16px;}
+  .bcardA .au{font-size:10.5px;letter-spacing:.7px;color:var(--muted);text-transform:uppercase;}
+  .bcardA .ti{font-size:16px;font-weight:600;margin:5px 0 12px;line-height:1.25;padding-right:20px;}
+  .bcardA .dt{font-size:11.5px;color:var(--muted2);letter-spacing:.4px;}
+  .bcardA .dots{position:absolute;bottom:14px;right:12px;cursor:pointer;color:#b3b8c0;padding:2px 6px;border-radius:6px;font-size:16px;line-height:1;}
+  .bcardA .dots:hover{background:#f2f3f5;color:var(--ink);}
+
+  .empty{grid-column:1/-1;border:1px dashed var(--line2);border-radius:14px;padding:44px 16px;text-align:center;color:var(--muted);font-size:14px;}
+  .loading{grid-column:1/-1;padding:40px;text-align:center;color:var(--muted2);font-size:14px;}
+
+  .view{display:none;} .view.on{display:block;}
+
+  /* ============ DRAWER ============ */
+  .scrim{position:fixed;inset:0;background:rgba(18,22,30,.32);opacity:0;pointer-events:none;transition:opacity .25s;z-index:60;}
+  .scrim.on{opacity:1;pointer-events:auto;}
+  .drawer{position:fixed;top:0;right:0;height:100vh;width:420px;max-width:92vw;background:#fff;box-shadow:-16px 0 50px -30px rgba(0,0,0,.4);transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:61;display:flex;flex-direction:column;}
+  .drawer.on{transform:translateX(0);}
+  .drawer .dh{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid var(--line);}
+  .drawer .dh .t{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:600;}
+  .drawer .dh .x{cursor:pointer;color:var(--muted);border:none;background:none;font-size:20px;line-height:1;padding:4px;border-radius:6px;}
+  .drawer .dh .x:hover{background:#f2f3f5;color:var(--ink);}
+  .drawer .db{padding:20px 22px;overflow:auto;flex:1;}
+  .drawer .df{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:10px;}
+  .drawer .df .btn{flex:1;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .dz{border:1.5px dashed var(--line2);border-radius:14px;padding:26px 16px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;position:relative;background:#fbfbfc;}
+  .dz:hover{border-color:var(--navy);background:#f7f8fa;}
+  .dz.has{padding:0;border-style:solid;overflow:hidden;min-height:150px;}
+  .dz .cam{width:34px;height:34px;border-radius:50%;background:#eef0f3;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;}
+  .dz .t{font-size:14px;font-weight:600;}
+  .dz .s{font-size:12px;color:var(--muted);margin-top:3px;}
+  .dz input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+  .dz .prev{width:100%;height:170px;object-fit:cover;display:block;}
+  .dz .urlrow{margin-top:12px;}
+  .urlmini{width:100%;background:#fff;border:1px solid var(--line2);border-radius:9px;padding:9px 11px;font-size:12.5px;outline:none;}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(18px);background:var(--navy);color:#fff;font-weight:600;font-size:14px;padding:12px 20px;border-radius:12px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:90;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast.bad{background:#c2382f;}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div class="login" id="login">
+  <div class="brandbar"><span class="mk"><span></span></span><b>Mixroom</b></div>
+  <div class="center">
+    <form class="lcard" id="login-form">
+      <div class="avatar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b909a" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+      </div>
+      <h1>Login to your account</h1>
+      <div class="sub">Enter your details to login</div>
+      <div class="fld"><label class="lbl">Email</label>
+        <input class="inp" type="email" id="u" autocomplete="username" placeholder="admin@mixroom.com" /></div>
+      <div class="fld"><label class="lbl">Password</label>
+        <div class="pwrap">
+          <input class="inp" type="password" id="p" autocomplete="current-password" placeholder="••••••••" />
+          <button type="button" class="eye" id="eye" aria-label="Show password">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <label class="keep"><input type="checkbox" id="keep" /> Keep me logged in</label>
+      <button class="btn b-navy" type="submit" id="signin-btn">Sign In</button>
+      <div class="err" id="login-err"></div>
+      <div class="signup">Don't have an account? <b id="signup-btn">Sign Up</b></div>
+      <div class="lhint">First time? Enter an email &amp; password and click <b>Sign Up</b> to create the admin account, then Sign In.</div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div class="app" id="app">
+  <aside class="side">
+    <div class="logo"><span class="mk"><span></span></span><b>Mixroom</b></div>
+    <div class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a8adb6" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <input type="text" placeholder="Search" />
+    </div>
+    <div class="cap">Main Menu</div>
+    <div class="nitem" data-view="dash">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      Dashboard</div>
+    <div class="nitem on" data-view="class">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      Class</div>
+    <div class="nitem" data-view="blogs">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v5h5"/></svg>
+      Blogs</div>
+    <div class="nitem" data-view="settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.4 1a7 7 0 0 0-2-1.2L14 2h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12a7 7 0 0 0 .1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 2 1.2L10 22h4l.5-2.6a7 7 0 0 0 2-1.2l2.4 1 2-3.4-2-1.6A7 7 0 0 0 19 12z"/></svg>
+      Settings</div>
+    <div class="spacer"></div>
+    <div class="sec2">
+      <a class="nitem" href="index.html" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        View live site</a>
+    </div>
+    <div class="uprofile">
+      <div class="av">AA</div>
+      <div><div class="un">Alexandra Andria</div><div class="ue">alexandra@mail.com</div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="maintop">
+      <button class="logout" id="logout">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
+        Logout</button>
+    </div>
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <section class="view" id="v-dash">
+        <div class="pagehead"><h2>Dashboard</h2></div>
+        <div class="stats">
+          <div class="stat acc"><div class="n" id="s-prog">0</div><div class="l">Classes published</div></div>
+          <div class="stat"><div class="n" id="s-blog">0</div><div class="l">Blog posts published</div></div>
+          <div class="stat"><div class="n" id="s-total">0</div><div class="l">Total content items</div></div>
+        </div>
+        <div class="stat" style="border-radius:16px">
+          <div class="l" style="margin-bottom:12px;font-weight:600;color:var(--ink);font-size:15px">Quick actions</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="addbtn" onclick="openClass()">+ Add Class</button>
+            <button class="btn b-ghost" onclick="openBlog()">+ Add Blog</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLASS -->
+      <section class="view on" id="v-class">
+        <div class="pagehead"><h2>Class</h2><button class="addbtn" onclick="openClass()">+ Add Class</button></div>
+        <div class="grid" id="class-grid"><div class="loading">Loading…</div></div>
+      </section>
+
+      <!-- BLOGS -->
+      <section class="view" id="v-blogs">
+        <div class="pagehead"><h2>Blogs</h2><button class="addbtn" onclick="openBlog()">+ Add Blog</button></div>
+        <div class="grid" id="blog-grid"><div class="loading">Loading…</div></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="view" id="v-settings">
+        <div class="pagehead"><h2>Settings</h2></div>
+        <div class="stat" style="border-radius:16px"><div class="l">Content is stored in Supabase and appears on the live site automatically. Nothing to configure here yet.</div></div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ================= DRAWERS ================= -->
+<div class="scrim" id="scrim"></div>
+
+<!-- New Class -->
+<aside class="drawer" id="d-class">
+  <div class="dh"><div class="t">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.7"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    New Class</div><button class="x" onclick="closeDrawers()">✕</button></div>
+  <form class="db" id="class-form">
+    <div class="fld"><label class="lbl">Title</label><input class="inp" id="c-title" required placeholder="Mastering Guitar" /></div>
+    <div class="fld"><label class="lbl">Level</label>
+      <select class="inp" id="c-level"><option>Beginner</option><option>Intermediate</option><option selected>Advanced</option></select>
+    </div>
+    <div class="row2">
+      <div class="fld"><label class="lbl">Price ($)</label><input class="inp" id="c-price" type="number" min="0" placeholder="120" /></div>
+      <div class="fld"><label class="lbl">Category</label>
+        <select class="inp" id="c-cat"><option>Guitar</option><option>Keyboard &amp; Piano</option><option>Drum</option><option>Vocal</option><option>Bass</option><option>Band</option></select>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label class="lbl">Discount</label>
+        <select class="inp" id="c-dtype"><option>Percentage</option><option>Fixed</option></select>
+      </div>
+      <div class="fld"><label class="lbl">Value</label><input class="inp" id="c-dval" placeholder="70%" /></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label class="lbl">Mentor</label><input class="inp" id="c-mentor" placeholder="Lukman Hakim" /></div>
+      <div class="fld"><label class="lbl">Max Student</label><input class="inp" id="c-max" type="number" min="0" placeholder="15" /></div>
+    </div>
+    <div class="fld"><label class="lbl">Thumbnail</label>
+      <div class="dz" id="c-dz">
+        <input type="file" accept="image/*" id="c-file" />
+        <div class="cam"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b909a" stroke-width="1.7"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="t">Upload Thumbnail</div><div class="s">Click or drag and drop here</div>
+      </div>
+      <div class="urlrow"><input class="urlmini" id="c-img" placeholder="…or paste an image URL" /></div>
+    </div>
+  </form>
+  <div class="df"><button class="btn b-ghost" onclick="closeDrawers()">Cancel</button><button class="btn b-navy" id="c-save" form="class-form" type="submit">Save</button></div>
+</aside>
+
+<!-- New Blog -->
+<aside class="drawer" id="d-blog">
+  <div class="dh"><div class="t">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.7"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v5h5"/></svg>
+    New Blogs</div><button class="x" onclick="closeDrawers()">✕</button></div>
+  <form class="db" id="blog-form">
+    <div class="fld"><label class="lbl">Title</label><input class="inp" id="b-title" required placeholder="Enter blog title" /></div>
+    <div class="fld"><label class="lbl">Author</label><input class="inp" id="b-author" placeholder="Enter author name" /></div>
+    <div class="fld"><label class="lbl">Category</label>
+      <select class="inp" id="b-cat"><option value="">— none —</option><option>Music Tips</option><option>Instruments</option><option>Performance</option><option>Songwriting</option><option>Band Life</option><option>Student Stories</option></select>
+    </div>
+    <div class="fld"><label class="lbl">Description</label><textarea class="inp" id="b-desc" style="min-height:150px;resize:vertical;line-height:1.5" placeholder="Write blog description here"></textarea></div>
+    <div class="fld"><label class="lbl">Cover image</label>
+      <div class="dz" id="b-dz">
+        <input type="file" accept="image/*" id="b-file" />
+        <div class="cam"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b909a" stroke-width="1.7"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="t">Upload Image</div><div class="s">Click or drag and drop here</div>
+      </div>
+      <div class="urlrow"><input class="urlmini" id="b-img" placeholder="…or paste an image URL" /></div>
+    </div>
+  </form>
+  <div class="df"><button class="btn b-ghost" onclick="closeDrawers()">Cancel</button><button class="btn b-navy" id="b-save" form="blog-form" type="submit">Save</button></div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="store.js"></script>
+<script>
+(function(){
+  "use strict";
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  var toastT; function toast(msg,bad){ var t=$("toast"); t.textContent=msg; t.className="toast show"+(bad?" bad":""); clearTimeout(toastT); toastT=setTimeout(function(){ t.className="toast"+(bad?" bad":""); },2200); }
+
+  var sb = (window.MixDB && MixDB.client) ? MixDB.client : null;
+
+  /* ---- login (Supabase Auth — writes require an authenticated user) ---- */
+  function showApp(){ $("login").style.display="none"; $("app").classList.add("on"); loadAll(); }
+  function setErr(m){ $("login-err").textContent=m||""; }
+  $("eye").addEventListener("click", function(){ var p=$("p"); p.type = p.type==="password"?"text":"password"; });
+
+  (async function(){
+    if(!sb){ setErr("Database not reachable."); return; }
+    try{ var r=await sb.auth.getSession(); if(r.data && r.data.session) showApp(); }catch(e){}
+  })();
+
+  $("login-form").addEventListener("submit", async function(e){
+    e.preventDefault(); setErr("");
+    if(!sb){ setErr("Database not reachable."); return; }
+    var btn=$("signin-btn"); btn.disabled=true; btn.textContent="Signing in…";
+    try{
+      var r=await sb.auth.signInWithPassword({ email:$("u").value.trim(), password:$("p").value });
+      if(r.error) setErr(r.error.message); else showApp();
+    }catch(err){ setErr(err.message); }
+    btn.disabled=false; btn.textContent="Sign In";
+  });
+
+  $("signup-btn").addEventListener("click", async function(){
+    setErr("");
+    if(!sb){ setErr("Database not reachable."); return; }
+    var email=$("u").value.trim(), pass=$("p").value;
+    if(!email || pass.length<6){ setErr("Enter an email and a password of at least 6 characters, then click Sign Up."); return; }
+    try{
+      var r=await sb.auth.signUp({ email:email, password:pass });
+      if(r.error){ setErr(r.error.message); return; }
+      if(r.data && r.data.session){ showApp(); toast("Admin account created ✓"); }
+      else { setErr("Account created. If email confirmation is on, confirm via email, then Sign In."); }
+    }catch(err){ setErr(err.message); }
+  });
+
+  $("logout").addEventListener("click", async function(){ try{ if(sb) await sb.auth.signOut(); }catch(e){} location.reload(); });
+
+  /* ---- view switching ---- */
+  window.go=function(v){
+    document.querySelectorAll(".nitem[data-view]").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-view")===v); });
+    document.querySelectorAll(".view").forEach(function(s){ s.classList.remove("on"); });
+    $("v-"+v).classList.add("on");
+  };
+  document.querySelectorAll(".nitem[data-view]").forEach(function(b){ b.addEventListener("click", function(){ go(b.getAttribute("data-view")); }); });
+
+  /* ---- drawers ---- */
+  function openDrawer(id){ $("scrim").classList.add("on"); $(id).classList.add("on"); }
+  window.closeDrawers=function(){ $("scrim").classList.remove("on"); document.querySelectorAll(".drawer").forEach(function(d){ d.classList.remove("on"); }); };
+  $("scrim").addEventListener("click", closeDrawers);
+  window.openClass=function(){ $("class-form").reset(); resetDZ("c"); openDrawer("d-class"); };
+  window.openBlog=function(){ $("blog-form").reset(); resetDZ("b"); openDrawer("d-blog"); };
+
+  /* ---- image pickers (file -> dataURL, or paste URL) ---- */
+  function resetDZ(pfx){ var dz=$(pfx+"-dz"); dz.classList.remove("has"); dz.querySelectorAll(".prev").forEach(function(n){n.remove();}); }
+  function setPrev(pfx,src){
+    var dz=$(pfx+"-dz"); resetDZ(pfx);
+    if(src){ var img=document.createElement("img"); img.className="prev"; img.src=src; dz.classList.add("has"); dz.appendChild(img);
+      // keep the file input clickable on top
+      dz.appendChild($(pfx+"-file")); }
+  }
+  function wireImg(pfx){
+    $(pfx+"-file").addEventListener("change", function(){
+      var f=this.files&&this.files[0]; if(!f) return;
+      var r=new FileReader(); r.onload=function(){ $(pfx+"-img").value=r.result; setPrev(pfx,r.result); }; r.readAsDataURL(f);
+    });
+    $(pfx+"-img").addEventListener("input", function(){ setPrev(pfx, this.value.trim()); });
+  }
+  wireImg("c"); wireImg("b");
+
+  /* ---- data ---- */
+  if(!window.MixDB || !MixDB.ready){ toast("Database not reachable — check connection.", true); }
+
+  window.__delClass=async function(id){ if(!confirm("Delete this class?"))return; try{ await MixDB.delProgram(id); toast("Class deleted"); loadAll(); }catch(e){ toast("Delete failed: "+e.message,true);} };
+  window.__delBlog =async function(id){ if(!confirm("Delete this post?")) return; try{ await MixDB.delBlog(id);   toast("Post deleted");  loadAll(); }catch(e){ toast("Delete failed: "+e.message,true);} };
+
+  $("class-form").addEventListener("submit", async function(e){
+    e.preventDefault();
+    var btn=$("c-save"); btn.disabled=true; btn.textContent="Saving…";
+    try{
+      await MixDB.addProgram({
+        title:$("c-title").value.trim(), level:$("c-level").value, category:$("c-cat").value,
+        price:Number($("c-price").value)||null, discount_type:$("c-dtype").value, discount_value:$("c-dval").value.trim()||null,
+        mentor:$("c-mentor").value.trim()||null, max_students:Number($("c-max").value)||null, image:$("c-img").value.trim()||null
+      });
+      closeDrawers(); toast("Class published ✓"); loadAll();
+    }catch(err){ toast("Save failed: "+err.message,true); }
+    btn.disabled=false; btn.textContent="Save";
+  });
+
+  $("blog-form").addEventListener("submit", async function(e){
+    e.preventDefault();
+    var btn=$("b-save"); btn.disabled=true; btn.textContent="Saving…";
+    try{
+      await MixDB.addBlog({
+        title:$("b-title").value.trim(), author:$("b-author").value.trim()||null, category:$("b-cat").value||null,
+        description:$("b-desc").value.trim()||null, image:$("b-img").value.trim()||null
+      });
+      closeDrawers(); toast("Post published ✓"); loadAll();
+    }catch(err){ toast("Save failed: "+err.message,true); }
+    btn.disabled=false; btn.textContent="Save";
+  });
+
+  /* ---- render ---- */
+  function classCard(p){
+    var th=p.image?'style="background-image:url(\''+String(p.image).replace(/'/g,"%27")+'\')"':'';
+    var off=MixDB.fmtDiscount(p.discount_value);
+    return '<div class="ccard">'
+      +'<div class="dots" onclick="__delClass(\''+p.id+'\')" title="Delete">⋮</div>'
+      +'<div class="top"><div class="th" '+th+'></div><div><div class="nm">'+esc(p.title)+'</div><div class="lv">'+esc(p.level||'')+'</div></div></div>'
+      +'<div class="prow"><span class="price">$'+(p.price!=null?p.price:'—')+'</span>'+(off?'<span class="badge">'+esc(off)+'</span>':'')+'</div>'
+      +'<div class="mentor"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b909a" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>'+esc(p.mentor||'—')+'</div>'
+      +'<div class="hr"></div><div class="max">Max. '+(p.max_students!=null?p.max_students:'—')+' Student</div></div>';
+  }
+  function blogCard(b){
+    var im=b.image?'style="background-image:url(\''+String(b.image).replace(/'/g,"%27")+'\')"':'';
+    return '<div class="bcardA"><div class="img" '+im+'></div>'
+      +'<div class="body"><div class="au">'+esc((b.author||'—').toUpperCase())+'</div>'
+      +'<div class="ti">'+esc(b.title)+'</div><div class="dt">'+esc(MixDB.fmtDate(b.created_at))+'</div></div>'
+      +'<div class="dots" onclick="__delBlog(\''+b.id+'\')" title="Delete">⋮</div></div>';
+  }
+
+  async function loadAll(){
+    try{
+      var progs=await MixDB.programs();
+      $("class-grid").innerHTML = progs.length ? progs.map(classCard).join("") : '<div class="empty">No classes yet. Click “+ Add Class”.</div>';
+      $("s-prog").textContent=progs.length;
+      var blogs=await MixDB.blogs();
+      $("blog-grid").innerHTML = blogs.length ? blogs.map(blogCard).join("") : '<div class="empty">No posts yet. Click “+ Add Blog”.</div>';
+      $("s-blog").textContent=blogs.length;
+      $("s-total").textContent=progs.length+blogs.length;
+    }catch(e){
+      $("class-grid").innerHTML='<div class="empty">Could not load: '+esc(e.message)+'</div>';
+      $("blog-grid").innerHTML='<div class="empty">Could not load: '+esc(e.message)+'</div>';
+    }
+  }
+})();
+</script>
+</body>
+</html>

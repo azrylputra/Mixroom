@@ -135,9 +135,11 @@
 </div>
 </div></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="store.js"></script>
 <script src="app.js"></script>
 <script>
-  (function(){
+  (async function(){
     var listEl=document.getElementById('blog-list');
     var tabsEl=document.getElementById('blog-tabs');
     var searchEl=document.getElementById('blog-search');
@@ -156,6 +158,18 @@
       {date:"AUG 02, 2026", author:"Rina Putri", cat:"Instruments", title:"Caring for Your Keyboard & Piano", img:"assets/prog8.jpg"}
     ];
 
+    // merge posts added from the admin CMS (Supabase) — newest first
+    try{
+      if(window.MixDB && MixDB.ready){
+        var rowsB=await MixDB.blogs();
+        if(rowsB.length){
+          POSTS = rowsB.map(function(s){
+            return {id:s.id, date:MixDB.fmtDate(s.created_at), author:s.author||'Mixroom', cat:s.category||'', title:s.title, img:s.image||"assets/prog1.jpg"};
+          }).concat(POSTS);
+        }
+      }
+    }catch(e){}
+
     // build tabs
     var activeTab="All";
     CATS.forEach(function(c){
@@ -165,7 +179,8 @@
     });
 
     function cardHTML(p){
-      return '<a class="bcard" href="blog-detail.html">'
+      var href = 'blog-detail.html' + (p.id ? '?id='+encodeURIComponent(p.id) : '');
+      return '<a class="bcard" href="'+href+'">'
         +'<div class="content">'
           +'<div class="date"><span class="dt">'+p.date+'</span><img class="sc" src="assets/blog-scribble.svg" alt=""></div>'
           +'<div class="foot"><div class="badge">'+p.author.toUpperCase()+'</div><div class="ttl">'+p.title+'</div></div>'
