@@ -199,14 +199,15 @@
       {cat:"Band",lvl:"Advanced",nm:"Band Leadership",price:400,off:"-25%"}
     ];
 
-    // merge classes added from the admin CMS (Supabase) — newest first
+    // classes come from the admin CMS (Supabase). The static list above is
+    // only an offline fallback if the database can't be reached.
     try{
       if(window.MixDB && MixDB.ready){
         var rows=await MixDB.programs();
         if(rows.length){
           CLASSES = rows.map(function(s){
             return {cat:s.category, lvl:s.level, nm:s.title, price:Number(s.price)||0, off:MixDB.fmtDiscount(s.discount_value), img:s.image||''};
-          }).concat(CLASSES);
+          });
         }
       }
     }catch(e){}

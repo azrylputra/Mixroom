@@ -180,8 +180,7 @@
       <label class="keep"><input type="checkbox" id="keep" /> Keep me logged in</label>
       <button class="btn b-navy" type="submit" id="signin-btn">Sign In</button>
       <div class="err" id="login-err"></div>
-      <div class="signup">Don't have an account? <b id="signup-btn">Sign Up</b></div>
-      <div class="lhint">First time? Enter an email &amp; password and click <b>Sign Up</b> to create the admin account, then Sign In.</div>
+      <div class="lhint">Admin access only.</div>
     </form>
   </div>
 </div>
@@ -363,19 +362,6 @@
       if(r.error) setErr(r.error.message); else showApp();
     }catch(err){ setErr(err.message); }
     btn.disabled=false; btn.textContent="Sign In";
-  });
-
-  $("signup-btn").addEventListener("click", async function(){
-    setErr("");
-    if(!sb){ setErr("Database not reachable."); return; }
-    var email=$("u").value.trim(), pass=$("p").value;
-    if(!email || pass.length<6){ setErr("Enter an email and a password of at least 6 characters, then click Sign Up."); return; }
-    try{
-      var r=await sb.auth.signUp({ email:email, password:pass });
-      if(r.error){ setErr(r.error.message); return; }
-      if(r.data && r.data.session){ showApp(); toast("Admin account created ✓"); }
-      else { setErr("Account created. If email confirmation is on, confirm via email, then Sign In."); }
-    }catch(err){ setErr(err.message); }
   });
 
   $("logout").addEventListener("click", async function(){ try{ if(sb) await sb.auth.signOut(); }catch(e){} location.reload(); });
