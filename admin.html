@@ -471,8 +471,8 @@
   if(!window.MixDB || !MixDB.ready){ toast("Database not reachable — check connection.", true); }
   var PROGRAMS=[], BLOGS=[];
 
-  window.__delClass=async function(id){ if(!confirm("Delete this class?"))return; try{ await MixDB.delProgram(id); toast("Class deleted"); loadAll(); }catch(e){ toast("Delete failed: "+e.message,true);} };
-  window.__delBlog =async function(id){ if(!confirm("Delete this post?")) return; try{ await MixDB.delBlog(id);   toast("Post deleted");  loadAll(); }catch(e){ toast("Delete failed: "+e.message,true);} };
+  window.__delClass=async function(id){ if(!confirm("Delete this class?"))return; try{ await MixDB.delProgram(id); PROGRAMS=PROGRAMS.filter(function(x){return x.id!==id;}); renderClasses(); toast("Class deleted"); }catch(e){ toast("Delete failed: "+e.message,true);} };
+  window.__delBlog =async function(id){ if(!confirm("Delete this post?")) return; try{ await MixDB.delBlog(id); BLOGS=BLOGS.filter(function(x){return x.id!==id;}); renderBlogsList(); toast("Post deleted"); }catch(e){ toast("Delete failed: "+e.message,true);} };
 
   /* ---- ⋮ menu (Edit / Delete) ---- */
   var menuType=null, menuId=null;
@@ -511,9 +511,9 @@
       mentor:$("c-mentor").value.trim()||null, max_students:Number($("c-max").value)||null, image:$("c-img").value.trim()||null
     };
     try{
-      if(editClassId){ await MixDB.updateProgram(editClassId,payload); toast("Class updated ✓"); }
-      else { await MixDB.addProgram(payload); toast("Class published ✓"); }
-      closeDrawers(); loadAll();
+      if(editClassId){ var up=await MixDB.updateProgram(editClassId,payload); var i=PROGRAMS.findIndex(function(x){return x.id===editClassId;}); if(i>-1) PROGRAMS[i]=up; toast("Class updated ✓"); }
+      else { var nw=await MixDB.addProgram(payload); PROGRAMS.unshift(nw); toast("Class published ✓"); }
+      renderClasses(); closeDrawers();
     }catch(err){ toast("Save failed: "+err.message,true); }
     btn.disabled=false; btn.textContent = editClassId ? "Update" : "Save";
   });
@@ -526,9 +526,9 @@
       description:$("b-desc").value.trim()||null, image:$("b-img").value.trim()||null
     };
     try{
-      if(editBlogId){ await MixDB.updateBlog(editBlogId,payload); toast("Post updated ✓"); }
-      else { await MixDB.addBlog(payload); toast("Post published ✓"); }
-      closeDrawers(); loadAll();
+      if(editBlogId){ var upb=await MixDB.updateBlog(editBlogId,payload); var j=BLOGS.findIndex(function(x){return x.id===editBlogId;}); if(j>-1) BLOGS[j]=upb; toast("Post updated ✓"); }
+      else { var nb=await MixDB.addBlog(payload); BLOGS.unshift(nb); toast("Post published ✓"); }
+      renderBlogsList(); closeDrawers();
     }catch(err){ toast("Save failed: "+err.message,true); }
     btn.disabled=false; btn.textContent = editBlogId ? "Update" : "Save";
   });
@@ -552,15 +552,15 @@
       +'<div class="dots" onclick="__menu(event,\'b\',\''+b.id+'\')" title="Options">⋮</div></div>';
   }
 
+  function updateStats(){ $("s-prog").textContent=PROGRAMS.length; $("s-blog").textContent=BLOGS.length; $("s-total").textContent=PROGRAMS.length+BLOGS.length; }
+  function renderClasses(){ $("class-grid").innerHTML = PROGRAMS.length ? PROGRAMS.map(classCard).join("") : '<div class="empty">No classes yet. Click “+ Add Class”.</div>'; updateStats(); }
+  function renderBlogsList(){ $("blog-grid").innerHTML = BLOGS.length ? BLOGS.map(blogCard).join("") : '<div class="empty">No posts yet. Click “+ Add Blog”.</div>'; updateStats(); }
+
+  // full fetch only on initial login; saves/edits/deletes update the local list instead
   async function loadAll(){
     try{
-      var progs=await MixDB.programs(); PROGRAMS=progs;
-      $("class-grid").innerHTML = progs.length ? progs.map(classCard).join("") : '<div class="empty">No classes yet. Click “+ Add Class”.</div>';
-      $("s-prog").textContent=progs.length;
-      var blogs=await MixDB.blogs(); BLOGS=blogs;
-      $("blog-grid").innerHTML = blogs.length ? blogs.map(blogCard).join("") : '<div class="empty">No posts yet. Click “+ Add Blog”.</div>';
-      $("s-blog").textContent=blogs.length;
-      $("s-total").textContent=progs.length+blogs.length;
+      PROGRAMS=await MixDB.programs(); renderClasses();
+      BLOGS=await MixDB.blogs(); renderBlogsList();
     }catch(e){
       $("class-grid").innerHTML='<div class="empty">Could not load: '+esc(e.message)+'</div>';
       $("blog-grid").innerHTML='<div class="empty">Could not load: '+esc(e.message)+'</div>';
