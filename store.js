@@ -43,6 +43,10 @@
       }).select().single();
       if(r.error) throw r.error; return r.data;
     },
+    updateProgram: async function(id,patch){
+      var r = await need().from("programs").update(patch).eq("id",id).select().single();
+      if(r.error) throw r.error; return r.data;
+    },
     delProgram: async function(id){
       var r = await need().from("programs").delete().eq("id",id);
       if(r.error) throw r.error;
@@ -62,6 +66,10 @@
         title:b.title, author:b.author, category:b.category,
         description:b.description, image:b.image
       }).select().single();
+      if(r.error) throw r.error; return r.data;
+    },
+    updateBlog: async function(id,patch){
+      var r = await need().from("blogs").update(patch).eq("id",id).select().single();
       if(r.error) throw r.error; return r.data;
     },
     delBlog: async function(id){

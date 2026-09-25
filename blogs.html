@@ -145,6 +145,7 @@
     var searchEl=document.getElementById('blog-search');
     var emptyEl=document.getElementById('blog-empty');
     if(!listEl) return;
+    listEl.innerHTML='<div style="grid-column:1/-1;padding:48px;text-align:center;color:#9a9a9a;font-size:16px">Loading articles…</div>';
 
     var CATS=["All","Music Tips","Instruments","Performance","Songwriting","Band Life","Student Stories"];
     var POSTS=[

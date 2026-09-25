@@ -173,6 +173,7 @@
     var grid=document.getElementById('prog-grid');
     var emptyMsg=document.getElementById('prog-empty');
     if(!grid) return;
+    grid.insertAdjacentHTML('afterbegin','<div id="prog-loading" style="grid-column:1/-1;padding:48px;text-align:center;color:#9a9a9a;font-size:16px">Loading classes…</div>');
 
     // class data: category + level + numeric price drive the filters
     var CLASSES=[
@@ -227,15 +228,19 @@
     CLASSES.forEach(function(c,i){
       var el=document.createElement('div');
       el.className='card creveal';
-      el.setAttribute('data-cat', c.cat);
-      el.setAttribute('data-lvl', c.lvl);
+      el.setAttribute('data-cat', c.cat||'');
+      el.setAttribute('data-lvl', c.lvl||'');
       el.setAttribute('data-price', priceBucket(c.price));
       var _img = c.img || 'assets/prog'+((i%12)+1)+'.jpg';
+      var _lvl = (c.lvl||'').toUpperCase();
+      var _jt = (c.price!=null && c.price!=='') ? 'Join — <b>$'+c.price+'</b>' : 'Join';
+      var _badge = c.off ? '<span class="badge">'+c.off+'</span>' : '';
       el.innerHTML='<div class="img"><img src="'+_img+'" alt=""></div>'
-        +'<div class="meta"><div class="lvl">'+c.lvl.toUpperCase()+'</div><div class="nm">'+c.nm+'</div></div>'
-        +'<div class="join-btn"><span class="jt">Join — <b>$'+c.price+'</b></span><span class="badge">'+c.off+'</span></div>';
+        +'<div class="meta"><div class="lvl">'+_lvl+'</div><div class="nm">'+(c.nm||'')+'</div></div>'
+        +'<div class="join-btn"><span class="jt">'+_jt+'</span>'+_badge+'</div>';
       grid.appendChild(el); cardEls.push(el);
     });
+    var _pl=document.getElementById('prog-loading'); if(_pl) _pl.remove();
 
     // ---- build filter rows ----
     function countBy(fn){ var m={}; CLASSES.forEach(function(c){ var k=fn(c); m[k]=(m[k]||0)+1; }); return m; }
