@@ -442,14 +442,14 @@
       dz.appendChild($(pfx+"-file")); }
   }
   // downscale + compress on the client so we never store multi-MB base64 in the DB
-  function compressImage(file, cb){
+  function compressImage(file, max, quality, cb){
     var r=new FileReader();
     r.onload=function(){
       var img=new Image();
       img.onload=function(){
-        var max=1000, w=img.width, h=img.height;
+        var w=img.width, h=img.height;
         if(w>max||h>max){ if(w>=h){ h=Math.round(h*max/w); w=max; } else { w=Math.round(w*max/h); h=max; } }
-        try{ var cv=document.createElement("canvas"); cv.width=w; cv.height=h; cv.getContext("2d").drawImage(img,0,0,w,h); cb(cv.toDataURL("image/jpeg",0.82)); }
+        try{ var cv=document.createElement("canvas"); cv.width=w; cv.height=h; cv.getContext("2d").drawImage(img,0,0,w,h); cb(cv.toDataURL("image/jpeg",quality)); }
         catch(e){ cb(r.result); }
       };
       img.onerror=function(){ cb(r.result); };
@@ -457,14 +457,15 @@
     };
     r.readAsDataURL(file);
   }
-  function wireImg(pfx){
+  function wireImg(pfx, max, quality){
     $(pfx+"-file").addEventListener("change", function(){
       var f=this.files&&this.files[0]; if(!f) return;
-      compressImage(f, function(dataUrl){ $(pfx+"-img").value=dataUrl; setPrev(pfx,dataUrl); });
+      compressImage(f, max, quality, function(dataUrl){ $(pfx+"-img").value=dataUrl; setPrev(pfx,dataUrl); });
     });
     $(pfx+"-img").addEventListener("input", function(){ setPrev(pfx, this.value.trim()); });
   }
-  wireImg("c"); wireImg("b");
+  wireImg("c", 640, 0.72);   // class thumbnails stay small & fast
+  wireImg("b", 1200, 0.8);   // blog covers a bit larger for the article hero
 
   /* ---- data ---- */
   if(!window.MixDB || !MixDB.ready){ toast("Database not reachable — check connection.", true); }
