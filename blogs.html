@@ -159,14 +159,15 @@
       {date:"AUG 02, 2026", author:"Rina Putri", cat:"Instruments", title:"Caring for Your Keyboard & Piano", img:"assets/prog8.jpg"}
     ];
 
-    // merge posts added from the admin CMS (Supabase) — newest first
+    // posts come from the admin CMS (Supabase). The static list above is
+    // only an offline fallback if the database can't be reached.
     try{
       if(window.MixDB && MixDB.ready){
         var rowsB=await MixDB.blogs();
         if(rowsB.length){
           POSTS = rowsB.map(function(s){
             return {id:s.id, date:MixDB.fmtDate(s.created_at), author:s.author||'Mixroom', cat:s.category||'', title:s.title, img:s.image||"assets/prog1.jpg"};
-          }).concat(POSTS);
+          });
         }
       }
     }catch(e){}
