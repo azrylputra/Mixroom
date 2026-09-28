@@ -116,15 +116,18 @@
       });
     }
 
-    // (b) smooth crossfade carousel + dots + auto every 5s
+    // (b) crossfade carousel — the bottom-left indicator (dots AND thumbnails)
+    //     drives the big center image; also auto-advances every 5s
     var wrap=document.querySelector('.learn-imgwrap');
     var dotsWrap=document.querySelector('.learn-dots');
     if(wrap && dotsWrap){
-      var ls=wrap.querySelectorAll('.learn-slide');
-      var front=ls[0], back=ls[1];
+      var slides=wrap.querySelectorAll('.learn-slide');
       var IMAGES=['assets/home-learn-1.png','assets/home-learn-2.png','assets/home-learn-3.png','assets/home-learn-4.png'];
       IMAGES.forEach(function(s){ var im=new Image(); im.src=s; });
-      var idx=0, timer=null;
+      var idx=0, vis=0, timer=null;
+      slides[0].src=IMAGES[0]; slides[0].style.opacity='1'; slides[1].style.opacity='0';
+
+      // dots indicator
       dotsWrap.innerHTML='';
       IMAGES.forEach(function(_,i){
         var d=document.createElement('div'); d.className='ldot'+(i===0?' on':'');
@@ -132,12 +135,26 @@
         dotsWrap.appendChild(d);
       });
       var dots=dotsWrap.querySelectorAll('.ldot');
-      function swap(){ back.style.opacity='1'; front.style.opacity='0'; var t=front; front=back; back=t; }
+
+      // thumbnails also act as the indicator (click to jump)
+      var thumbEls=Array.prototype.slice.call(document.querySelectorAll('.thumbs .t'));
+      thumbEls.forEach(function(t,j){
+        var im=t.querySelector('img'); var src=im?im.getAttribute('src'):null;
+        var target=IMAGES.indexOf(src); if(target<0) target=j+1;
+        t.setAttribute('data-target', target);
+        t.style.cursor='pointer';
+        t.addEventListener('click', function(){ go(target); restart(); });
+      });
+
       function go(i){
         if(i===idx) return; idx=i;
         dots.forEach(function(d,j){ d.classList.toggle('on', j===i); });
-        back.onload=swap; back.src=IMAGES[i];
-        if(back.complete) swap();
+        thumbEls.forEach(function(t){ t.classList.toggle('on', Number(t.getAttribute('data-target'))===i); });
+        var hidden=slides[vis===0?1:0], shown=slides[vis];
+        var done=false;
+        function reveal(){ if(done) return; done=true; hidden.style.opacity='1'; shown.style.opacity='0'; vis=(vis===0?1:0); }
+        hidden.onload=reveal; hidden.src=IMAGES[i];
+        if(hidden.complete && hidden.naturalWidth) reveal();
       }
       function next(){ go((idx+1)%IMAGES.length); }
       function restart(){ if(timer) clearInterval(timer); timer=setInterval(next,5000); }
