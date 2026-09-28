@@ -275,7 +275,7 @@
   .cta-note{font-weight:500;font-size:18px;letter-spacing:.36px;color:#fff;width:320px;line-height:1.2;}
 
   /* ===================== FOOTER ===================== */
-  .footer{background:#111;width:1440px;position:relative;height:871px;}
+  .footer{background:#111;width:1440px;position:relative;height:871px;overflow:hidden;}
   .impact{position:absolute;left:0;top:64px;width:1440px;display:flex;align-items:flex-start;justify-content:space-between;padding:0 80px;}
   .impact-l{display:flex;gap:39px;align-items:flex-start;}
   .impact-card{width:224px;height:276px;border-radius:24px;position:relative;overflow:hidden;}
