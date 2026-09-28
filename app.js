@@ -50,16 +50,16 @@
 
   // ---- Class cards ----
   var CLASSES = [
-    {lvl:"BEGINNER", nm:"Guitar Essentials", price:"$100", off:"-60%"},
-    {lvl:"BEGINNER", nm:"Drum Performance", price:"$75", off:"-40%"},
-    {lvl:"INTERMEDIATE", nm:"Vocal Performance", price:"$150", off:"-55%"},
-    {lvl:"BEGINNER", nm:"Keyboard Foundations", price:"$120", off:"-70%"}
+    {lvl:"BEGINNER", nm:"Guitar Essentials", price:"$100", off:"-60%", img:"assets/home-cls-guitar.png"},
+    {lvl:"BEGINNER", nm:"Drum Performance", price:"$75", off:"-40%", img:"assets/home-cls-drum.png"},
+    {lvl:"INTERMEDIATE", nm:"Vocal Performance", price:"$150", off:"-55%", img:"assets/home-cls-vocal.png"},
+    {lvl:"BEGINNER", nm:"Keyboard Foundations", price:"$120", off:"-70%", img:"assets/home-cls-keyboard.png"}
   ];
   var cc = document.getElementById('class-cards');
   if(cc){
     cc.innerHTML = CLASSES.map(function(c){
       return '<div class="card creveal">'
-        +'<div class="img"><img src="assets/rect-34624749.png" alt=""/></div>'
+        +'<div class="img"><img src="'+c.img+'" alt=""/></div>'
         +'<div class="meta"><div class="lvl">'+c.lvl+'</div><div class="nm">'+c.nm+'</div></div>'
         +'<div class="join-btn"><span class="jt">Join — <b>'+c.price+'</b></span><span class="badge">'+c.off+'</span></div>'
         +'</div>';
@@ -122,7 +122,7 @@
     if(wrap && dotsWrap){
       var ls=wrap.querySelectorAll('.learn-slide');
       var front=ls[0], back=ls[1];
-      var IMAGES=['assets/rect-34624750.png','assets/rect-34624749.png','assets/showcase-circle.png','assets/hero-band.png'];
+      var IMAGES=['assets/home-learn-1.png','assets/home-learn-2.png','assets/home-learn-3.png','assets/home-learn-4.png'];
       IMAGES.forEach(function(s){ var im=new Image(); im.src=s; });
       var idx=0, timer=null;
       dotsWrap.innerHTML='';
@@ -268,7 +268,7 @@
     var host=document.getElementById('gal-imgs');
     var prev=document.getElementById('gal-prev'), next=document.getElementById('gal-next');
     if(!host||!prev||!next) return;
-    var POOL=['assets/rect-34624749.png','assets/rect-34624750.png','assets/showcase-circle.png','assets/hero-band.png','assets/impact-card.png'];
+    var POOL=['assets/home-show-1.png','assets/home-show-2.png','assets/home-show-3.jpg','assets/home-show-4.jpg','assets/home-show-5.jpg'];
     POOL.forEach(function(s){ new Image().src=s; });
     var W=[300,450,300];
     function m(n){ return ((n%POOL.length)+POOL.length)%POOL.length; }
@@ -288,10 +288,10 @@
     var dotsWrap=document.querySelector('.blog-dots');
     if(!host||!prev||!next) return;
     var BLOGS=[
-      {date:"SEP 16, 2026", author:"LUKMAN HAKIM", title:"How to Practice an Instrument Without Getting Bored", a:"assets/rect-34624749.png"},
-      {date:"OCT 02, 2026", author:"RINA PUTRI", title:"Finding Your Sound: A Beginner's Guide to Tone", a:"assets/rect-34624750.png"},
-      {date:"OCT 20, 2026", author:"DAVE KUSUMA", title:"Why Playing in a Band Makes You Improve Faster", a:"assets/showcase-circle.png"},
-      {date:"NOV 05, 2026", author:"MIXROOM CREW", title:"Five Warm-Ups Every Musician Should Know by Heart", a:"assets/hero-band.png"}
+      {date:"SEP 16, 2026", author:"LUKMAN HAKIM", title:"How to Practice an Instrument Without Getting Bored", a:"assets/home-blog-1.jpg"},
+      {date:"OCT 02, 2026", author:"RINA PUTRI", title:"Finding Your Sound: A Beginner's Guide to Tone", a:"assets/home-blog-2.jpg"},
+      {date:"OCT 20, 2026", author:"DAVE KUSUMA", title:"Why Playing in a Band Makes You Improve Faster", a:"assets/home-show-1.png"},
+      {date:"NOV 05, 2026", author:"MIXROOM CREW", title:"Five Warm-Ups Every Musician Should Know by Heart", a:"assets/home-show-2.png"}
     ];
     BLOGS.forEach(function(x){ new Image().src=x.a; });
     function card(x, mirror){
